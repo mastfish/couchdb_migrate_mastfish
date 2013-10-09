@@ -11,3 +11,4 @@ Gem::Specification.new do |s|
     'http://rubygems.org/gems/couchdb_migrate_mastfish'
   s.license       = 'MIT'
 end
+
