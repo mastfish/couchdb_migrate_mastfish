@@ -1,3 +1,7 @@
+require "em-synchrony"
+require "em-synchrony/em-http"
+require "couchrest"
+
 class Couchdb_migrate_mastfish
 
   def initialize(config)
@@ -16,20 +20,22 @@ class Couchdb_migrate_mastfish
     end
   end
 
-  EM.synchrony do
-    concurrency = 50
-    urls = db.view('plays/all')
+  def update_plays
+    EM.synchrony do
+      concurrency = 50
+      urls = db.view('plays/all')
 
-    # iterator will execute async blocks until completion, .each, .inject also work!
-    results = EM::Synchrony::Iterator.new(urls["rows"], concurrency).each do |url, iter|
-      # fire async requests, on completion advance the iterator
-      http = EventMachine::HttpRequest.new(@db + url["id"]).aget
-      http.callback { update(http, iter) }
+      # iterator will execute async blocks until completion, .each, .inject also work!
+      results = EM::Synchrony::Iterator.new(urls["rows"], concurrency).each do |url, iter|
+        # fire async requests, on completion advance the iterator
+        http = EventMachine::HttpRequest.new(@db + url["id"]).aget
+        http.callback { update(http, iter) }
+      end
+      EventMachine.stop
     end
-    EventMachine.stop
   end
-
 end
+
 
 
 

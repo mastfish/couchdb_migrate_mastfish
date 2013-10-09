@@ -10,5 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://rubygems.org/gems/couchdb_migrate_mastfish'
   s.license       = 'MIT'
+  s.add_runtime_dependency 'em-synchrony'
+  s.add_runtime_dependency 'em-http-request'
+  s.add_runtime_dependency 'couchrest'
 end
-
