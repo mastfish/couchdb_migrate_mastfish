@@ -1,19 +1,28 @@
-require "em-synchrony"
-require "em-synchrony/em-http"
-require "couchrest"
-
 class Couchdb_migrate_mastfish
 
   def initialize(config)
     @db = config["db"]
     @views = config["views"]
-    p @db
-    p 'here'
+    @views.each do |key, value|
+      # Define method
+      # get_#{view["key"]}s}
+      #   urls = db.view(value)
+      #   inject urls into internal map method
+      # end
+
+      ######################
+      # transform_#{view["key"]}s}
+      #   urls = db.view(value)
+      #   inject urls into internal each, update method
+      #   accept block to do transformation here
+      # end
+
+    end
   end
 
   def update(http, iter)
     item = JSON.parse http.response
-    item = transform(item)
+    item = transform(item) # execute block here
     put = EventMachine::HttpRequest.new(@db + item["_id"]).aput :body => item.to_json
     put.callback do
       iter.next
@@ -35,7 +44,3 @@ class Couchdb_migrate_mastfish
     end
   end
 end
-
-
-
-
