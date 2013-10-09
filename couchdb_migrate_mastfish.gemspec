@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'couchdb_migrate_mastfish'
-  s.version     = '0.0.0'
+  s.version     = '0.0.1'
   s.date        = '2013-10-09'
   s.summary     = "Migrations gem for couchdb"
   s.description = "Provides a set of helpful methods for async updates and fetches to couchdb. Not even slightly stable, functional or reccomended for anyone's use"
